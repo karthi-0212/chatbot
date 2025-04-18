@@ -4,7 +4,7 @@ export default function SidebarToggleButton({ isNavbarOpen, setNavbarOpen }) {
   return (
     <button
       className="absolute top-1/2 left-[13px] z-20 transform -translate-y-1/2 h-[298px] flex items-center cursor-pointer"
-      onClick={()=>{}}
+      onClick={() => setNavbarOpen(!isNavbarOpen)}
     >
       <Image
         src="/assets/images/right-arrow.png"
