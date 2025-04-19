@@ -23,7 +23,7 @@ export default function MessageInputBox({
         <motion.div
           animate={{ rotate: showFileOptions ? 45 : 0 }}
           transition={{ duration: 0.15 }}
-          className="absolute left-8 bottom-[14px] cursor-pointer rounded-full p-2 hover:bg-gray-200 transition-colors duration-200"
+          className="absolute left-8 bottom-[18px] cursor-pointer rounded-full p-2 hover:bg-gray-200 transition-colors duration-200"
           onClick={() => setShowFileOptions((prev) => !prev)}
         >
           {/* upload icon */}
@@ -76,7 +76,7 @@ export default function MessageInputBox({
 
         {/* send button */}
         <button
-          className={`absolute right-[10px] bottom-[14px] w-[30px] h-[30px] rounded-full flex items-center justify-center ${
+          className={`absolute right-[10px] bottom-[18px] w-[30px] h-[30px] rounded-full flex items-center justify-center ${
             isTyping ? "bg-black text-white cursor-pointer" : "bg-gray-300 text-white"
           } transition-colors duration-300`}
           disabled={!isTyping}
