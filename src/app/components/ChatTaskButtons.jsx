@@ -14,7 +14,7 @@ export default function ChatTaskButtons() {
           }}
           animate={{ y: 0 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="w-[149px] h-[40px] bg-white border border-[#E5E5EA] rounded-full text-[#AFAFAF] font-medium cursor-pointer"
+          className="w-[149px] h-[40px] bg-white border border-[#E5E5EA] rounded-full text-[#AFAFAF] cursor-pointer"
         >
           {task}
         </motion.button>

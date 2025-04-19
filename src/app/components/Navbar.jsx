@@ -12,7 +12,7 @@ export default function Navbar({ isHovered }) {
       }`}
     >
       <div className="space-y-2">
-        <div className="font-bold text-[13px] p-2 mt-3 flex items-center">
+        <div className="text-[13px] p-2 mt-3 flex items-center">
           <img
             src={`/assets/images/Profile.png`}
             alt="Profile icon"
@@ -23,6 +23,7 @@ export default function Navbar({ isHovered }) {
           Jane Cooper
         </div>
 
+        {/* Navbar elements */}
         <div className="space-y-2">
           {["Chats", "Sent", "Draft", "Spam", "Trash"].map((item, index) => (
             <div
@@ -41,6 +42,8 @@ export default function Navbar({ isHovered }) {
           ))}
         </div>
       </div>
+
+      {/* Navbar footer elements */}
       <div className="space-y-2">
         {["Help", "Rate", "About"].map((item, index) => (
           <div
