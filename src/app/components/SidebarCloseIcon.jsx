@@ -14,8 +14,8 @@ export default function SidebarCloseIcon({
       <Image
         src={
           isHovered
-            ? "/assets/images/Sidebar-1.png"
-            : "/assets/images/Sidebar-2.png"
+            ? "/assets/images/Sidebar-2.png"
+            : "/assets/images/Sidebar-1.png"
         }
         alt="Sidebar Icon"
         width={4}
