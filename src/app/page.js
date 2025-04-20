@@ -31,11 +31,12 @@ export default function ChatUI() {
   // Fetch all messages once at mount
   useEffect(() => {
     const fetchMessages = async () => {
+      setIsLoading(true);
       const res = await fetch("/api/messages");
       const data = await res.json();
       setMessages(data.map((msg) => msg.text));
       setFilteredMessages(data);
-      setIsLoading(true);
+      setIsLoading(false);
     };
     fetchMessages();
   }, []);
@@ -110,9 +111,12 @@ export default function ChatUI() {
         />
 
         {/* Container to display the messages */}
-        {
-          isLoading && <MessageList containerRef={containerRef} messages={filteredMessages} />
-        }
+        {isLoading ? (
+          <div className="flex justify-center items-center mt-[200px]">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (<MessageList containerRef={containerRef} messages={filteredMessages} isLoading={isLoading} />
+        )}
 
         {/* Message input section with send and file options */}
         <MessageInputBox
