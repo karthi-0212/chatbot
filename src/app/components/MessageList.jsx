@@ -9,7 +9,7 @@ export default function MessageList({ containerRef, messages }) {
           key={idx}
           className="bg-[#0c5cf7] text-white mr-[54px] px-4 py-2 rounded-lg mb-2 ml-auto w-fit max-w-[60%] break-all whitespace-pre-wrap"
         >
-          {msg}
+          {msg.text}
         </div>
       ))}
     </div>

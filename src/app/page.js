@@ -18,6 +18,8 @@ export default function ChatUI() {
   const [showSearch, setShowSearch] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [isHovered, setIsHovered] = useState(false);
+  const [filteredMessages, setFilteredMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -26,20 +28,50 @@ export default function ChatUI() {
     }
   }, [messages]);
 
+  // Fetch all messages once at mount
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const res = await fetch("/api/messages");
+      const data = await res.json();
+      setMessages(data.map((msg) => msg.text));
+      setFilteredMessages(data);
+      setIsLoading(true);
+    };
+    fetchMessages();
+  }, []);
+
   // Handle sending a message
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
-      setMessages([...messages, input]);
-      setInput("");
-      setIsTyping(false);
+      try {
+        const res = await fetch("/api/messages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: input }),
+        });
+
+        if (!res.ok) throw new Error("Failed to send message");
+
+        const newMessage = await res.json();
+        setMessages((prev) => [...prev, newMessage.text]);
+        setFilteredMessages((prev) => [...prev, newMessage]);
+        setInput("");
+        setIsTyping(false);
+      } catch (error) {
+        console.error("Send Error:", error);
+      }
     }
   };
 
-  const filteredMessages = searchText
-    ? messages.filter((msg) =>
-      msg.toLowerCase().includes(searchText.toLowerCase())
-    )
-    : messages;
+  // when user search into the search box, it fetches from the DB
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const res = await fetch(`/api/messages/search?q=${searchText}`);
+      const data = await res.json();
+      setFilteredMessages(data);
+    };
+    fetchMessages();
+  }, [searchText]);
 
   return (
     <div className="responsive-chat flex w-[770px] h-[610px] relative overflow-hidden bg-white rounded-3xl mx-auto mt-[100px] mb-[22px] border border-[#E5E5EA]">
@@ -78,7 +110,9 @@ export default function ChatUI() {
         />
 
         {/* Container to display the messages */}
-        <MessageList containerRef={containerRef} messages={filteredMessages} />
+        {
+          isLoading && <MessageList containerRef={containerRef} messages={filteredMessages} />
+        }
 
         {/* Message input section with send and file options */}
         <MessageInputBox
